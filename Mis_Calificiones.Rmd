@@ -1,0 +1,27 @@
+---
+title: "Calificaciones"
+author: "Elsy Marisol"
+date: "7 de febrero de 2017"
+output: html_document
+---
+
+#Primer Semestre
+**Materias**.
+
+1. Matematicas Basicas   8
+2. Problemas de Basicas  8
+3. Conceptos de Calculo  8
+4. Programacion I        7
+5. DHPC                  10
+6. Introduccion Actuarial8
+ 
+##Segundo Semestre
+**Materias**
+
+* Teoria de Ecuaciones 9
+* Programacion II      6
+* Formacion Humana     9
+* Geometria Analitica  8
+* Registro Academico   7
+* Calculo Diferencial  5
+

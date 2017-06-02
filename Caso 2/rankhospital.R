@@ -4,25 +4,25 @@ rankhospital <- function(state, result, num = "mejor"){
     v <- c("infarto", "falla", "neumonia")
     
     if (state %in% x == F){
-        stop("estado inválido")
+        stop("estado invÃ¡lido")
         break
     }
     if (result == "infarto") r <- 11
     else if (result == "falla") r <- 17
     else if (result == "neumonia") r <- 23
     else if (result %in% v == F){
-        stop("resultado inválido")
+        stop("resultado invÃ¡lido")
         break
     }
     
     mydata <- data[data$State == state,]
-    mnd <- mydata[,c(2,r)]
-    if (sum(mnd[,2]=="Not Available") < 1) {
+    verde <- mydata[,c(2,r)]
+    if (sum(verde[,2]=="Not Available") < 1) {
         
-        out <- mnd[order(as.numeric(final[,2])),]
+        des<- verde[order(as.numeric(final[,2])),]
         if (num == "mejor") num <- 1
-        else if (num == "peor") num <- nrow(out)
-        else if (num > nrow(out)) {
+        else if (num == "peor") num <- nrow(des)
+        else if (num > nrow(des)) {
             stop(return(NA))
         }
         i <- 0
@@ -30,26 +30,26 @@ rankhospital <- function(state, result, num = "mejor"){
             i <- i + 1
         }
         dif <- num - i
-        out2 <- out[which(out[,2] == out[num,2]),]
-        fo <- out2[order(out2[,1]),]
+        des2 <- des[which(des[,2] == des[num,2]),]
+        fo <- des2[order(des2[,1]),]
         fo[dif,1] 
     }
     
     else  {
-        final <- mnd[- grep("Not", mnd[,2]),]
-        out <- final[order(as.numeric(final[,2])),]
+        final <- verde[- grep("Not", verde[,2]),]
+        des <- final[order(as.numeric(final[,2])),]
         if (num == "mejor") num <- 1
-        else if (num == "peor") num <- nrow(out)
-        else if (num > nrow(out)) {
+        else if (num == "peor") num <- nrow(des)
+        else if (num > nrow(des)) {
             stop(return(NA))
         }
         i <- 0
-        while (out[i+1,2] != out[num,2]){
+        while (des[i+1,2] != des[num,2]){
             i <- i + 1
         }
         dif <- num - i
-        out2 <- out[which(out[,2] == out[num,2]),]
-        fo <- out2[order(out2[,1]),]
+        des2 <- des[which(des[,2] == des[num,2]),]
+        fo <- des2[order(des2[,1]),]
         fo[dif,1]
     }
 }

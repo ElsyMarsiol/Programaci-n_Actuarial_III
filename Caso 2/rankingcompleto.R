@@ -5,12 +5,12 @@ rankingcompleto <- function(result, num = "mejor") {
     else if (result == "falla") col <- 17
     else if (result == "neumonia") col <- 23
     else if (result %in% v == F){
-        stop("resultado inválido")
+        stop("resultado invÃ¡lido")
     }
     data[, col] <- suppressWarnings(as.numeric(levels(data[, col])[data[, col]]))
     data[, 2] <- as.character(data[, 2])
     
-    output <- vector() 
+    desput <- vector() 
     estados <- levels(data[, 7])
     for(i in 1:length(estados)) {
         databystate <- data[grep(estados[i], data[,7]), ]
@@ -20,12 +20,12 @@ rankingcompleto <- function(result, num = "mejor") {
         else if(num == "peor") hospital <- ordered[nrow(ordered), 2]
         else hospital <- ordered[num, 2]
         
-        output <- append(output, c(hospital, estados[i]))
+        desput <- append(desput, c(hospital, estados[i]))
     }
-    output <- as.data.frame(matrix(output, length(estados), 2, byrow = TRUE))
-    colnames(output) <- c("hospital", "state")
-    rownames(output) <- estados
-    output
+    desput <- as.data.frame(matrix(desput, length(estados), 2, byrow = TRUE))
+    colnames(desput) <- c("hospital", "state")
+    rownames(desput) <- estados
+    desput
 }
 tail(rankingcompleto("falla"), 10)
 

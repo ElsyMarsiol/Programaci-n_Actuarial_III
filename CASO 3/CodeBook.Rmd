@@ -1,0 +1,115 @@
+CodeBook
+=========================================================
+###Reconocimiento de Actividad Humana con Celulares            
+     
+
+      
+####Descripcion de Base de Datos####            
+       
+
+
+Los experimentos se llevaron a cabo con un grupo de 30 voluntarios dentro de un margen de edad de 19 a 48 años. Cada persona realizo seis actividades (caminar, caminar escaleras arriba, caminar escaleras abajo,estar sentado, estar parado y estar acostado) todas ellas mientras utilizaban un teléfono Samsung Galaxy SII en la cintura. Utilizando el acelerómetro y el giroscopio incorporados , se capto la aceleracion lineal 3-axial y la velocidad angular 3-axial a una velocidad constante de 50 Hz.  Los experimentos se grabaron en vídeo para etiquetar los datos de forma manual. El conjunto de datos obtenidos se  dividio aleatoriamente en dos grupos, en lel que se seleccionó el 70% de los voluntarios para la generación de los datos de entrenamiento y 30%  para los datos de prueba.
+Las señales del sensor (acelerómetro y giroscopio) fueron pre-procesados mediante la aplicación de filtros de ruido y luego se muestrean en deslizamiento de ancho fijo ventanas de 2,56 seg y 50% de solapamiento. La señal de aceleración del sensor, que tiene componentes gravitacionales y el movimiento del cuerpo, se separó usando un filtro de paso bajo Butterworth en aceleración cuerpo y la gravedad.Se supone que la fuerza gravitacional sólo tiene componentes de baja frecuencia, por lo que se utilizó un filtro con una frecuencia de corte de 0,3 Hz. A partir de cada ventana, se obtuvo un vector de características calculando variables a partir del dominio de tiempo y frecuencia. 
+
+####Datos####
+Se proporcina:  
+
+features_info.txt': Muestra información sobre las variables utilizadas en el vector de características.  
+
+features.txt': Lista de todas las funciones.  
+
+activity_labels.txt': Enlaza las etiquetas de clase con su nombre de actividad.  
+
+train / X_train.txt': Conjunto de entrenamiento.  
+
+train / y_train.txt': Etiquetas de entrenamiento.  
+
+test / X_test.txt': Conjunto de pruebas.  
+
+test / y_test.txt': Prueba de etiquetas.  
+
+####Variables####
+
+tBodyAcc-XYZ  
+
+tGravityAcc-XYZ  
+
+tBodyAccJerk-XYZ  
+
+tBodyGyro-XYZ  
+
+tBodyGyroJerk-XYZ  
+
+tBodyAccMag  
+
+tGravityAccMag  
+
+tBodyAccJerkMag  
+
+tBodyGyroMag  
+
+tBodyGyroJerkMag  
+
+fBodyAcc-XYZ  
+
+fBodyAccJerk-XYZ  
+
+fBodyGyro-XYZ  
+
+fBodyAccMag  
+
+fBodyAccJerkMag  
+
+fBodyGyroMag  
+
+fBodyGyroJerkMag  
+
+Y las señales derivadas de estas variables fueron:  
+
+mean(): Media  
+
+std(): Desviación estandar  
+
+mad(): Desviación media absoluta  
+
+max(): Valor más grande de los datos  
+
+min(): Valor más pequño de los datos  
+
+sma(): Signal magnitude area  
+
+energy(): Medición de energía  
+
+iqr(): Rango intercuartil  
+
+entropy(): Señal de entropia  
+ 
+arCoeff(): Coeficiente de autorregresion con orden igual a 4  
+
+correlation(): Coeficiente de correlación entrre dos señales  
+
+maxInds(): Índice de coeficiente de frecuencia con la magnitud más grande  
+
+meanFreq(): Coeficientes de frecuencia para obtener la frecuencia media  
+
+skewness(): Oblicuidad de la señal de la frecuencia  
+
+kurtosis(): Curtosis de la señal de la frecuencia  
+
+bandsEnergy(): Energia de un intervalo de frecuencia bajo la función FFT  
+
+angle(): Angulo entre dos vectores  
+
+####Transformaciones####
+
+1) Une los datos de test con los de training, para crear un solo conjunto de datos.  
+
+2) Extrae únicamente las medidas de media y desviación estándar de cada medición.  
+
+3) Usa nombres de actividad para describir los nombres de las actividades en la base de datos.  
+
+4) Coloca etiquetas apropiadas en la base de datos con nombres de variables que las describan.  
+
+5) Con los datos del paso 4, crea una segunda base de datos independiente con el promedio de cada variable para cada actividad y cada sujeto.  
+
+

@@ -1,0 +1,77 @@
+---
+title: "**PROGRAMACIÓN ACTUARIAL III 
+        RECONOCIMIENTO DE ACTIVIDAD HUMANA CON CELULARES**"
+author: "Leslie Barragán Ramírez, Elsy Marisol Marín Pablo, Christian Nazareth Pérez Castillo"
+output: html_document
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#### Introducción:
+
+Compañías como Fitbit, Nike y Jawbone Up compiten para desarrollar los algoritmos más avanzados para atraer a nuevos usuarios. Los datos de este caso provienen de los acelerómetros ubicados en celulares Samsung Galaxy S.  Una mayor descripción de la base de datos y su recopilación puede ser hallada en la siguiente liga: <http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones>  
+
+#### Instrucciones:
+El propósito de este proyecto es demostrar tu habilidad para recolectar, trabajar y limpiar base de datos. El objetivo es preparar un conjunto ordenado de información que pueda ser trabajado en análisis posteriores.
+
+######Nota: al principio siempre debe estar escrito el directorio donde vamos a trabajar. Así mismo debe contar con el paquete **Dplyr**.
+
+El código Correr_Análisis.R realiza lo siguiente:
+
+ 
+* Toma los datos de Test y de Training para hacer un nuevo conjunto de dato. Para lograr esto, primero lee los archivos de **Training** y de **Test**, posteriormente se unen. Para remover así los datos que ya no sean útiles.
+
+```
+xtra<-read.table("./train/X_train.txt")
+xtes<-read.table("./test/X_test.txt")
+total <- rbind(xtra, xtes)
+rm(xtra,xtes)
+```
+* Extrae solamente la media y desviación estandar, dando etiqueta a cada variable para poder nombrar correctamente las columnas del conjunto de datos **(Total)**. También crea un vector que tendrá los valores que tenemos que hallar con la función grepl que sirve para hallar patrones. Nuevamente elimina datos que ya no requerimos. 
+
+```
+Etiqueta<-read.table("features.txt")
+colnames(total)<-Etiqueta[,2]
+igual <- c("mean", "std")
+nototal<-subset(total, select = grepl(paste(igual, collapse = "|"), names(total)))
+rm(Etiqueta,igual,total)
+```
+* Coloca etiquetas en la base de datos con nombres de variables que las describa. 
+
+```
+colnames(nototal) <- sub("-", "", colnames(nototal))
+colnames(nototal) <- sub("^", "MeanOf", colnames(nototal))
+colnames(nototal) <- sub("BodyBody", "Body", colnames(nototal))
+colnames(nototal) <- sub("f", "Frequency", colnames(nototal))
+colnames(nototal) <- sub("t", "Time", colnames(nototal))
+colnames(nototal) <- sub("std", "Std", colnames(nototal))
+colnames(nototal) <- sub("mean", "Mean", colnames(nototal))
+```
+* Carga los datos de Training y Test sobre la actividad para así unirlos, se le asigna un factor con niveles. Posteriormente cambia el nombre de casa nivel y se agrega como una nueva columna.
+
+```
+atrain<-read.table("./train/y_train.txt")
+acttest<-read.table("./test/y_test.txt")
+actividad<-rbind(atrain,acttest)
+
+rm(atrain,acttest)
+
+Actividad<-factor(actividad$V1,levels = c(1:6))
+levels(Actividad)<-c("Walking","Walking Upstairs","Walking Downstairs","Sitting","Standing","Laying")
+```
+
+* Con los datos obtenidos en el paso antedicho crea una segunda base de datos externa con el promedio de cada **Actividad** y cada **Persona**. Une los de Test y Training en uno solo. Se utiliza el paquete Dplyr para tener el promedio de cada variable. Mostrando así la **Tabla** en la que se encuentra nuestra base de datos limpia. 
+
+```
+PersonasTrain<-read.table("./train/subject_train.txt")
+PersonasTest<-read.table("./test/subject_test.txt")
+Persona<-rbind(PersonasTrain,PersonasTest)[,1]
+nototal2<-cbind(Actividad,nototal)
+nototal3<-cbind(Persona,nototal2)
+
+library(dplyr)
+Tabla <- nototal3 %>% group_by(Persona, Actividad) %>% summarise_each(funs(mean))
+write.table(Tabla, row.names= F,file = "ordenada.txt") 
+View(Tabla)
+```
